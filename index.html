@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCALI | Lemgo Pilot Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #22d3ee;
+            --neon-purple: #a855f7;
+            --bg-dark: #020617;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .neon-border {
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3), inset 0 0 5px rgba(34, 211, 238, 0.2);
+            border: 1px solid rgba(34, 211, 238, 0.5);
+        }
+
+        .neon-text-cyan {
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.9);
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--neon-cyan) 0%, transparent 70%);
+            filter: blur(80px);
+            z-index: -1;
+            animation: pulse-slow 10s infinite ease-in-out;
+        }
+
+        .voucher-bg {
+            background: linear-gradient(135deg, #020617 0%, #1e1b4b 100%);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(34, 211, 238, 0.4);
+        }
+
+        .voucher-bg::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(34, 211, 238, 0.03) 40px, rgba(34, 211, 238, 0.03) 80px);
+            pointer-events: none;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cyber-logo {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+        }
+
+        .cyber-logo span {
+            color: white;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 24px;
+            font-style: italic;
+            transform: skew(-10deg);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start">
+
+    <!-- Background Glows -->
+    <div class="bg-glow top-[-10%] left-[-10%]" style="background: radial-gradient(circle, var(--neon-purple) 0%, transparent 70%);"></div>
+    <div class="bg-glow bottom-[-10%] right-[-10%]"></div>
+
+    <!-- Header -->
+    <header class="w-full p-6 flex justify-between items-center glass sticky top-0 z-50 border-b border-cyan-500/20">
+        <div class="logo-container">
+            <div class="cyber-logo">
+                <span>L</span>
+            </div>
+            <div>
+                <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-none neon-text-cyan">LOCALI</h1>
+                <p class="text-[9px] text-cyan-400 font-bold tracking-[0.3em] uppercase">City Explorer</p>
+            </div>
+        </div>
+        <div class="text-right">
+            <p id="level-indicator" class="text-[10px] text-slate-400 font-bold uppercase mb-1 tracking-widest">Progress</p>
+            <div class="flex gap-1.5" id="stage-dots">
+                <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-slate-800"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-slate-800"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="w-full max-w-md px-6 pt-10 pb-20 flex-1 flex flex-col items-center">
+        
+        <!-- Game Screen -->
+        <div id="game-container" class="w-full space-y-10 text-center">
+            
+            <!-- Stage 1 View -->
+            <div id="stage-1" class="space-y-6">
+                <div class="relative inline-block">
+                    <div class="absolute -inset-4 bg-cyan-500/10 blur-2xl rounded-full"></div>
+                    <div class="w-28 h-28 bg-slate-900 border-2 border-cyan-400/30 rounded-full flex items-center justify-center relative shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+                        <i class="fa-solid fa-landmark text-4xl text-cyan-400 neon-text-cyan"></i>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black uppercase italic tracking-tight mb-2">Fragment 1: The Monument</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed px-4">
+                        Find the historic plaque at the <span class="text-white font-bold">Old Town Hall (Rathaus)</span>. 
+                        Look for the <span class="text-cyan-400">4-digit year</span> at the very bottom.
+                    </p>
+                </div>
+                <div class="space-y-4 pt-4 px-2">
+                    <input type="text" id="input-1" placeholder="ENTER 4-DIGIT YEAR" 
+                           class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-center font-bold tracking-[0.3em] text-cyan-400 focus:border-cyan-400 outline-none transition-all uppercase shadow-inner">
+                    <button onclick="checkStage(1)" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black py-4 rounded-2xl shadow-lg shadow-cyan-500/30 transition-all active:scale-95 uppercase tracking-widest">
+                        Verify Location
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stage 2 View (Hidden) -->
+            <div id="stage-2" class="space-y-6 hidden">
+                <div class="relative inline-block">
+                    <div class="absolute -inset-4 bg-purple-500/10 blur-2xl rounded-full"></div>
+                    <div class="w-28 h-28 bg-slate-900 border-2 border-purple-400/30 rounded-full flex items-center justify-center relative shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                        <i class="fa-solid fa-archway text-4xl text-purple-400"></i>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black uppercase italic tracking-tight mb-2 text-purple-400">Fragment 2: The Hidden Path</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed px-4">
+                        Navigate to the <span class="text-white font-bold">Hexen Bürgermeisterhaus</span>. 
+                        Locate the <span class="text-purple-400 font-bold">Neon Sticker</span> in the side alley for the keyword.
+                    </p>
+                </div>
+                <div class="space-y-4 pt-4 px-2">
+                    <input type="text" id="input-2" placeholder="ENTER KEYWORD" 
+                           class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-center font-bold tracking-[0.2em] text-purple-400 focus:border-purple-400 outline-none transition-all uppercase shadow-inner">
+                    <button onclick="checkStage(2)" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-black py-4 rounded-2xl shadow-lg shadow-purple-500/30 transition-all active:scale-95 uppercase tracking-widest">
+                        Unlock Trail
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stage 3 View (Hidden) -->
+            <div id="stage-3" class="space-y-6 hidden">
+                <div class="relative inline-block">
+                    <div class="absolute -inset-4 bg-emerald-500/10 blur-2xl rounded-full"></div>
+                    <div class="w-28 h-28 bg-slate-900 border-2 border-emerald-400/30 rounded-full flex items-center justify-center relative shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                        <i class="fa-solid fa-ice-cream text-4xl text-emerald-400"></i>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black uppercase italic tracking-tight mb-2 text-emerald-400">Final: San Remo Cafe</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed px-4">
+                        Head inside <span class="text-white font-bold">San Remo Ice Cafe</span>. 
+                        The final code is printed on the <span class="text-emerald-400 font-bold">LOCALI Flyer</span> at the register.
+                    </p>
+                </div>
+                <div class="space-y-4 pt-4 px-2">
+                    <input type="text" id="input-3" placeholder="ENTER FINAL CODE" 
+                           class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-center font-bold tracking-[0.2em] text-emerald-400 focus:border-emerald-400 outline-none transition-all uppercase shadow-inner">
+                    <button onclick="checkStage(3)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-4 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all active:scale-95 uppercase tracking-widest">
+                        Claim Reward
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result View (Hidden) -->
+        <div id="result-view" class="w-full hidden animate-in fade-in zoom-in duration-700">
+            <div class="voucher-bg p-8 rounded-[45px] shadow-2xl relative mb-10">
+                <!-- Voucher Top -->
+                <div class="flex justify-between items-start mb-12">
+                    <div class="logo-container">
+                        <div class="cyber-logo !w-8 !h-8">
+                            <span class="!text-sm">L</span>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-cyan-400 uppercase">Hunt Complete</span>
+                    </div>
+                    <div class="px-3 py-1 bg-emerald-500 rounded-full text-[9px] font-black text-white uppercase tracking-tighter">Verified Pilot Participant</div>
+                </div>
+
+                <!-- Main Offer -->
+                <div class="text-center mb-8">
+                    <h3 class="text-6xl font-black italic tracking-tighter text-white leading-none mb-2 shadow-cyan-500/50">50% OFF</h3>
+                    <p class="text-cyan-400 font-bold uppercase tracking-[0.3em] text-[10px]">ALL MENU ITEMS • NEXT MONTH</p>
+                </div>
+
+                <div class="bg-slate-950/60 border border-white/5 backdrop-blur-md rounded-3xl p-5 mb-8 text-center">
+                    <p class="text-slate-500 text-[9px] uppercase font-bold mb-1 tracking-widest">Exclusive Partner</p>
+                    <p class="text-white font-black text-xl italic tracking-tight">San Remo Ice Cafe</p>
+                    <p class="text-cyan-400/60 text-[8px] uppercase tracking-[0.4em] mt-1">Lemgo • Pilot v2.0</p>
+                </div>
+
+                <!-- Footer / QR -->
+                <div class="flex items-center justify-between border-t border-white/10 pt-8">
+                    <div class="text-left">
+                        <p class="text-[9px] text-slate-500 uppercase font-bold mb-1">Redemption Code</p>
+                        <p class="text-cyan-400 font-mono text-sm tracking-wider">LC-SR-2027-PILOT</p>
+                    </div>
+                    <div class="w-16 h-16 bg-white p-1 rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=SR-PILOT-50-OFF-CLAIMED" alt="QR Verify">
+                    </div>
+                </div>
+
+                <!-- Background Graphic -->
+                <i class="fa-solid fa-robot absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[200px] text-white/5 pointer-events-none skew-x-12"></i>
+            </div>
+            
+            <div class="flex flex-col gap-4">
+                <button id="share-btn" onclick="shareQuest()" class="w-full bg-slate-900 border border-cyan-400/50 text-cyan-400 font-black py-4 rounded-2xl flex items-center justify-center gap-3 active:scale-95 transition-all">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    SHARE QUEST ON INSTAGRAM
+                </button>
+                <button onclick="resetGame()" class="w-full text-slate-600 font-bold text-[10px] uppercase tracking-[0.4em] py-2">Restart Mission</button>
+            </div>
+            
+            <p class="mt-8 text-slate-500 text-[9px] uppercase text-center leading-loose tracking-widest px-4">
+                Show this digital voucher to staff at San Remo.<br>Valid once per explorer. 
+            </p>
+        </div>
+
+    </main>
+
+    <script>
+        // --- QUEST CONFIG ---
+        // These are the codes you will place on the physical markers in Lemgo
+        const CODES = {
+            1: "1358",      // CODE 1: Year on the Town Hall plaque
+            2: "CYBERPATH", // CODE 2: Keyword on the alley sticker
+            3: "SANREMO50"  // CODE 3: Final code from the San Remo counter
+        };
+
+        let currentStage = parseInt(localStorage.getItem('locali_stage')) || 1;
+
+        function init() {
+            if (localStorage.getItem('locali_completed')) {
+                showResult();
+                return;
+            }
+            showStage(currentStage);
+        }
+
+        function showStage(stage) {
+            document.querySelectorAll('#game-container > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(`stage-${stage}`).classList.remove('hidden');
+            
+            const dots = document.getElementById('stage-dots').children;
+            for(let i=0; i<dots.length; i++) {
+                if (i < stage) {
+                    dots[i].classList.replace('bg-slate-800', 'bg-cyan-400');
+                    dots[i].classList.add('shadow-[0_0_8px_#22d3ee]');
+                } else {
+                    dots[i].classList.replace('bg-cyan-400', 'bg-slate-800');
+                    dots[i].classList.remove('shadow-[0_0_8px_#22d3ee]');
+                }
+            }
+            document.getElementById('level-indicator').innerText = `Stage ${stage} / 3`;
+        }
+
+        function checkStage(stage) {
+            const inputField = document.getElementById(`input-${stage}`);
+            const inputVal = inputField.value.trim().toUpperCase();
+            const btn = event.target;
+            
+            if (inputVal === CODES[stage]) {
+                if (stage < 3) {
+                    currentStage = stage + 1;
+                    localStorage.setItem('locali_stage', currentStage);
+                    showStage(currentStage);
+                } else {
+                    localStorage.setItem('locali_completed', 'true');
+                    showResult();
+                }
+            } else {
+                btn.classList.replace('bg-cyan-500', 'bg-red-500');
+                btn.classList.replace('bg-purple-600', 'bg-red-500');
+                btn.classList.replace('bg-emerald-500', 'bg-red-500');
+                const originalText = btn.innerText;
+                btn.innerText = "INVALID FRAGMENT";
+                
+                setTimeout(() => {
+                    btn.classList.remove('bg-red-500');
+                    if (stage === 1) btn.classList.add('bg-cyan-500');
+                    if (stage === 2) btn.classList.add('bg-purple-600');
+                    if (stage === 3) btn.classList.add('bg-emerald-500');
+                    btn.innerText = originalText;
+                }, 1200);
+            }
+        }
+
+        function showResult() {
+            document.getElementById('game-container').classList.add('hidden');
+            document.getElementById('result-view').classList.remove('hidden');
+            document.getElementById('stage-dots').parentElement.classList.add('hidden');
+        }
+
+        function shareQuest() {
+            const shareData = {
+                title: 'LOCALI | The Lemgo Glitch',
+                text: 'I completed the hunt and unlocked a 50% discount at San Remo Lemgo! Can you find the codes?',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData);
+            } else {
+                // Fallback: Copy to clipboard
+                const dummy = document.createElement('input');
+                document.body.appendChild(dummy);
+                dummy.value = window.location.href;
+                dummy.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummy);
+                
+                const btn = document.getElementById('share-btn');
+                const oldText = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> LINK COPIED!';
+                setTimeout(() => btn.innerHTML = oldText, 2000);
+            }
+        }
+
+        function resetGame() {
+            localStorage.clear();
+            window.location.reload();
+        }
+
+        init();
+    </script>
+</body>
+</html>
