@@ -114,7 +114,7 @@
         ul.rules-list {
             list-style: none;
             padding: 0;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         ul.rules-list li {
@@ -156,9 +156,21 @@
             margin-top: auto;
             transition: all 0.2s;
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            text-align: center;
+            display: block;
+            text-decoration: none;
         }
 
         .primary-btn:active { transform: scale(0.98); background: var(--accent-color); }
+
+        .secondary-btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            margin-top: 10px;
+        }
+
+        .secondary-btn:hover { background: rgba(0, 255, 65, 0.1); }
 
         input {
             width: 100%;
@@ -195,6 +207,24 @@
         }
 
         .social-btn:hover { color: var(--accent-color); }
+
+        /* --- WHATSAPP BOX --- */
+        .whatsapp-box {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px dashed var(--secondary-color);
+            padding: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: background 0.3s;
+        }
+        
+        .whatsapp-box:hover {
+            background: rgba(0, 255, 65, 0.1);
+        }
 
         /* --- TRACKER --- */
         .vibe-tracker {
@@ -275,6 +305,14 @@
             <li>Unlock an <strong>exclusive subscription</strong> at the end.</li>
         </ul>
 
+        <a href="https://wa.me/4917684830327" class="whatsapp-box" target="_blank">
+            <i class="fab fa-whatsapp" style="font-size: 1.8rem; color: #25D366;"></i>
+            <div>
+                <strong style="color: var(--accent-color); font-size: 0.9rem;">NEED SUPPORT?</strong><br>
+                <span style="font-size: 0.8rem; color: #aaa;">WhatsApp: +49 176 84830327</span>
+            </div>
+        </a>
+
         <h3>About Locali</h3>
         <p style="font-size: 0.8rem; color: #888;">
             Locali is a student-founded startup at TH OWL. We bridge the gap between campus life and the city through gamified exploration.
@@ -322,27 +360,24 @@
         </div>
         
         <p style="text-align: center; font-size: 0.9rem;">
-            Show this screen to the staff at <strong>San Remo Ice Cafe</strong> to activate your 1-month exclusive subscription.
+            To avail this offer, you <strong>MUST REGISTER</strong> below for the Half-Price Club. Your first month membership fee is on US.
         </p>
 
         <div style="border-top: 1px solid #333; margin-top: 20px; padding-top: 15px;">
-            <h3>Join the Elite</h3>
-            <p style="font-size: 0.8rem;">To verify your completion and secure your prize, click below:</p>
+            <h3>Final Step: Register</h3>
+            <p style="font-size: 0.8rem;">Click below to access the registration portal:</p>
             
-            <a href="https://instagram.com/locali_studentlife" target="_blank" style="text-decoration: none;">
-                <button class="primary-btn" style="font-size: 0.9rem; padding: 12px; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">
-                    CLAIM PRIZE (DM US)
+            <a href="https://www.sanremolemgo.de/halbpreisclub" target="_blank" style="text-decoration: none;">
+                <button class="primary-btn">
+                    REGISTER NOW (REQUIRED)
                 </button>
             </a>
-
-            <div class="social-links" style="border: none; margin-top: 15px;">
-                <a href="https://instagram.com/locali_studentlife" target="_blank" class="social-btn">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="mailto:locali.thenewsocial@gmail.com" class="social-btn">
-                    <i class="fas fa-envelope"></i>
-                </a>
-            </div>
+            
+            <a href="https://instagram.com/locali_studentlife" target="_blank" style="text-decoration: none;">
+                <button class="primary-btn secondary-btn" style="font-size: 0.9rem; padding: 12px;">
+                    FOLLOW US ON INSTAGRAM
+                </button>
+            </a>
         </div>
     </section>
 
@@ -362,13 +397,13 @@
             title: "Kanzelbrunnen",
             fact: "A piece of Renaissance history. This 'pulpit well' has stood here for centuries, watching the city change from timber to neon.",
             task: "Navigate to 52.028006, 8.906360. Count the number of HUMAN SCULPTURES on the monument.",
-            answer: "3"
+            answer: "4"
         },
         {
             title: "San Remo Ice Cafe",
             fact: "A local legend. For decades, this spot has served the best gelato in town. The perfect place to cool down your systems.",
-            task: "Enter the cafe. Find the LOCALI flyer at the register and enter the SECRET CODE.",
-            answer: "LOCALI24"
+            task: "Enter the cafe. Locate the picture on the wall explaining coffee making techniques. Find the name of the glass flask brewing method. (Hint: Starts with 'C')",
+            answer: "CHEMEX"
         }
     ];
 
