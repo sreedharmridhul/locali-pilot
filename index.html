@@ -2,365 +2,456 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOCALI | Lemgo Pilot Study</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LOCALI | The Lemgo Glitch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
     <style>
         :root {
-            --neon-cyan: #22d3ee;
-            --neon-purple: #a855f7;
-            --bg-dark: #020617;
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #00ff41; /* Hacker Green */
+            --secondary-color: #008F11; /* Darker Green */
+            --glass-bg: rgba(10, 10, 10, 0.95);
+            --error-color: #ff0055;
+            --border-color: #333;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: var(--bg-dark);
-            color: #f8fafc;
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        .neon-border {
-            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3), inset 0 0 5px rgba(34, 211, 238, 0.2);
-            border: 1px solid rgba(34, 211, 238, 0.5);
-        }
-
-        .neon-text-cyan {
-            text-shadow: 0 0 10px rgba(34, 211, 238, 0.9);
-        }
-
-        .glass {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        @keyframes pulse-slow {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.1); }
-        }
-
-        .bg-glow {
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--neon-cyan) 0%, transparent 70%);
-            filter: blur(80px);
-            z-index: -1;
-            animation: pulse-slow 10s infinite ease-in-out;
-        }
-
-        .voucher-bg {
-            background: linear-gradient(135deg, #020617 0%, #1e1b4b 100%);
+        #app {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             position: relative;
-            overflow: hidden;
-            border: 2px solid rgba(34, 211, 238, 0.4);
         }
 
-        .voucher-bg::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(34, 211, 238, 0.03) 40px, rgba(34, 211, 238, 0.03) 80px);
-            pointer-events: none;
+        /* --- TYPOGRAPHY & HEADER --- */
+        header { text-align: center; margin-bottom: 20px; padding-top: 10px; }
+        
+        .glitch {
+            font-size: 3rem;
+            line-height: 1;
+            font-weight: bold;
+            color: var(--text-color);
+            text-shadow: 2px 2px var(--secondary-color);
+            letter-spacing: -2px;
+            animation: glitch-anim 3s infinite alternate;
+            margin-bottom: 5px;
         }
 
-        .logo-container {
+        #status-text {
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTAINERS --- */
+        .screen {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.5s ease-out;
+            flex: 1;
             display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .cyber-logo {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
         }
 
-        .cyber-logo span {
-            color: white;
-            font-family: 'Arial Black', sans-serif;
-            font-size: 24px;
-            font-style: italic;
-            transform: skew(-10deg);
+        .hidden { display: none !important; }
+
+        h2 { 
+            font-size: 1.5rem; 
+            margin-bottom: 15px; 
+            color: #fff;
+            text-transform: uppercase;
+            border-bottom: 1px dashed #444;
+            padding-bottom: 10px;
         }
+
+        h3 {
+            font-size: 1rem;
+            color: var(--accent-color);
+            margin-top: 20px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        /* --- LISTS --- */
+        ul.rules-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        
+        ul.rules-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: start;
+            font-size: 0.9rem;
+        }
+
+        ul.rules-list li::before {
+            content: ">>";
+            color: var(--accent-color);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .fact-box {
+            font-size: 0.8rem;
+            color: #888;
+            background: rgba(255,255,255,0.05);
+            border-left: 2px solid #555;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        /* --- BUTTONS & INPUTS --- */
+        .primary-btn {
+            background: var(--text-color);
+            color: #000;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: auto;
+            transition: all 0.2s;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .primary-btn:active { transform: scale(0.98); background: var(--accent-color); }
+
+        input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #333;
+            color: var(--accent-color);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.3rem;
+            padding: 10px;
+            text-align: center;
+            outline: none;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        input:focus { border-color: var(--accent-color); }
+
+        /* --- CONTACT LINKS --- */
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+
+        .social-btn {
+            color: #888;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-btn:hover { color: var(--accent-color); }
+
+        /* --- TRACKER --- */
+        .vibe-tracker {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .fragment {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #444;
+            background: #111;
+            transform: rotate(45deg);
+            transition: all 0.3s;
+        }
+
+        .fragment.active { background: var(--accent-color); box-shadow: 0 0 10px var(--accent-color); border-color: var(--accent-color); }
+        .fragment.current { animation: blink 1s infinite; border-color: #fff; }
+
+        /* --- END SCREEN --- */
+        .voucher-code {
+            font-size: 1.5rem;
+            color: #000;
+            background: var(--accent-color);
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transform: rotate(-1deg);
+            line-height: 1.2;
+        }
+
+        .reset-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.7rem;
+            color: #444;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes glitch-anim {
+            0% { text-shadow: 2px 2px var(--secondary-color); transform: translate(0); }
+            20% { text-shadow: -2px -2px var(--error-color); transform: translate(-1px, 1px); }
+            40% { text-shadow: 2px -2px var(--secondary-color); transform: translate(1px, -1px); }
+            100% { text-shadow: 2px 2px var(--secondary-color); transform: translate(0); }
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 50% { opacity: 0.3; } }
+        .shake { animation: shake 0.4s ease-in-out; border-color: var(--error-color) !important; color: var(--error-color) !important; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-start">
+<body>
 
-    <!-- Background Glows -->
-    <div class="bg-glow top-[-10%] left-[-10%]" style="background: radial-gradient(circle, var(--neon-purple) 0%, transparent 70%);"></div>
-    <div class="bg-glow bottom-[-10%] right-[-10%]"></div>
-
-    <!-- Header -->
-    <header class="w-full p-6 flex justify-between items-center glass sticky top-0 z-50 border-b border-cyan-500/20">
-        <div class="logo-container">
-            <div class="cyber-logo">
-                <span>L</span>
-            </div>
-            <div>
-                <h1 class="text-2xl font-black italic tracking-tighter uppercase leading-none neon-text-cyan">LOCALI</h1>
-                <p class="text-[9px] text-cyan-400 font-bold tracking-[0.3em] uppercase">City Explorer</p>
-            </div>
-        </div>
-        <div class="text-right">
-            <p id="level-indicator" class="text-[10px] text-slate-400 font-bold uppercase mb-1 tracking-widest">Progress</p>
-            <div class="flex gap-1.5" id="stage-dots">
-                <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></div>
-                <div class="w-2.5 h-2.5 rounded-full bg-slate-800"></div>
-                <div class="w-2.5 h-2.5 rounded-full bg-slate-800"></div>
-            </div>
-        </div>
+<div id="app">
+    <header>
+        <h1 class="glitch">LOCALI</h1>
+        <p id="status-text">SYSTEM STANDBY</p>
     </header>
 
-    <!-- Main Content -->
-    <main class="w-full max-w-md px-6 pt-10 pb-20 flex-1 flex flex-col items-center">
+    <section id="screen-intro" class="screen hidden">
+        <h2>Mission Briefing</h2>
         
-        <!-- Game Screen -->
-        <div id="game-container" class="w-full space-y-10 text-center">
-            
-            <!-- Stage 1 View -->
-            <div id="stage-1" class="space-y-6">
-                <div class="relative inline-block">
-                    <div class="absolute -inset-4 bg-cyan-500/10 blur-2xl rounded-full"></div>
-                    <div class="w-28 h-28 bg-slate-900 border-2 border-cyan-400/30 rounded-full flex items-center justify-center relative shadow-[0_0_20px_rgba(34,211,238,0.2)]">
-                        <i class="fa-solid fa-landmark text-4xl text-cyan-400 neon-text-cyan"></i>
-                    </div>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-black uppercase italic tracking-tight mb-2">Fragment 1: The Monument</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed px-4">
-                        Find the historic plaque at the <span class="text-white font-bold">Old Town Hall (Rathaus)</span>. 
-                        Look for the <span class="text-cyan-400">4-digit year</span> at the very bottom.
-                    </p>
-                </div>
-                <div class="space-y-4 pt-4 px-2">
-                    <input type="text" id="input-1" placeholder="ENTER 4-DIGIT YEAR" 
-                           class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-center font-bold tracking-[0.3em] text-cyan-400 focus:border-cyan-400 outline-none transition-all uppercase shadow-inner">
-                    <button onclick="checkStage(1)" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black py-4 rounded-2xl shadow-lg shadow-cyan-500/30 transition-all active:scale-95 uppercase tracking-widest">
-                        Verify Location
-                    </button>
-                </div>
-            </div>
+        <p><strong>Welcome, Explorer.</strong><br>
+        You are entering the Locali Pilot Program. We are turning Lemgo into a playable game.</p>
+        
+        <h3>The Rules</h3>
+        <ul class="rules-list">
+            <li>Exclusive for students of <strong>TH OWL</strong>.</li>
+            <li>Visit 3 real-world locations.</li>
+            <li>Find physical clues to solve digital puzzles.</li>
+            <li>Unlock an <strong>exclusive subscription</strong> at the end.</li>
+        </ul>
 
-            <!-- Stage 2 View (Hidden) -->
-            <div id="stage-2" class="space-y-6 hidden">
-                <div class="relative inline-block">
-                    <div class="absolute -inset-4 bg-purple-500/10 blur-2xl rounded-full"></div>
-                    <div class="w-28 h-28 bg-slate-900 border-2 border-purple-400/30 rounded-full flex items-center justify-center relative shadow-[0_0_20px_rgba(168,85,247,0.2)]">
-                        <i class="fa-solid fa-archway text-4xl text-purple-400"></i>
-                    </div>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-black uppercase italic tracking-tight mb-2 text-purple-400">Fragment 2: The Hidden Path</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed px-4">
-                        Navigate to the <span class="text-white font-bold">Hexen Bürgermeisterhaus</span>. 
-                        Locate the <span class="text-purple-400 font-bold">Neon Sticker</span> in the side alley for the keyword.
-                    </p>
-                </div>
-                <div class="space-y-4 pt-4 px-2">
-                    <input type="text" id="input-2" placeholder="ENTER KEYWORD" 
-                           class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-center font-bold tracking-[0.2em] text-purple-400 focus:border-purple-400 outline-none transition-all uppercase shadow-inner">
-                    <button onclick="checkStage(2)" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-black py-4 rounded-2xl shadow-lg shadow-purple-500/30 transition-all active:scale-95 uppercase tracking-widest">
-                        Unlock Trail
-                    </button>
-                </div>
-            </div>
+        <h3>About Locali</h3>
+        <p style="font-size: 0.8rem; color: #888;">
+            Locali is a student-founded startup at TH OWL. We bridge the gap between campus life and the city through gamified exploration.
+        </p>
 
-            <!-- Stage 3 View (Hidden) -->
-            <div id="stage-3" class="space-y-6 hidden">
-                <div class="relative inline-block">
-                    <div class="absolute -inset-4 bg-emerald-500/10 blur-2xl rounded-full"></div>
-                    <div class="w-28 h-28 bg-slate-900 border-2 border-emerald-400/30 rounded-full flex items-center justify-center relative shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                        <i class="fa-solid fa-ice-cream text-4xl text-emerald-400"></i>
-                    </div>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-black uppercase italic tracking-tight mb-2 text-emerald-400">Final: San Remo Cafe</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed px-4">
-                        Head inside <span class="text-white font-bold">San Remo Ice Cafe</span>. 
-                        The final code is printed on the <span class="text-emerald-400 font-bold">LOCALI Flyer</span> at the register.
-                    </p>
-                </div>
-                <div class="space-y-4 pt-4 px-2">
-                    <input type="text" id="input-3" placeholder="ENTER FINAL CODE" 
-                           class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-center font-bold tracking-[0.2em] text-emerald-400 focus:border-emerald-400 outline-none transition-all uppercase shadow-inner">
-                    <button onclick="checkStage(3)" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-4 rounded-2xl shadow-lg shadow-emerald-500/30 transition-all active:scale-95 uppercase tracking-widest">
-                        Claim Reward
-                    </button>
-                </div>
-            </div>
+        <button class="primary-btn" onclick="startGame()">INITIALIZE GAME</button>
+
+        <div class="social-links">
+            <a href="https://instagram.com/locali_studentlife" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+            <a href="mailto:locali.thenewsocial@gmail.com" class="social-btn"><i class="fas fa-envelope"></i></a>
+            <a href="#" class="social-btn" title="TH OWL"><i class="fas fa-university"></i></a>
+        </div>
+    </section>
+
+    <section id="screen-game" class="screen hidden">
+        <div class="vibe-tracker">
+            <div class="fragment" id="frag-0"></div>
+            <div class="fragment" id="frag-1"></div>
+            <div class="fragment" id="frag-2"></div>
         </div>
 
-        <!-- Result View (Hidden) -->
-        <div id="result-view" class="w-full hidden animate-in fade-in zoom-in duration-700">
-            <div class="voucher-bg p-8 rounded-[45px] shadow-2xl relative mb-10">
-                <!-- Voucher Top -->
-                <div class="flex justify-between items-start mb-12">
-                    <div class="logo-container">
-                        <div class="cyber-logo !w-8 !h-8">
-                            <span class="!text-sm">L</span>
-                        </div>
-                        <span class="text-[10px] font-bold tracking-[0.2em] text-cyan-400 uppercase">Hunt Complete</span>
-                    </div>
-                    <div class="px-3 py-1 bg-emerald-500 rounded-full text-[9px] font-black text-white uppercase tracking-tighter">Verified Pilot Participant</div>
-                </div>
+        <h2 id="loc-title">Loading...</h2>
+        
+        <div class="fact-box">
+            <span style="color:var(--accent-color)">INFO:</span> <span id="loc-fact">...</span>
+        </div>
 
-                <!-- Main Offer -->
-                <div class="text-center mb-8">
-                    <h3 class="text-6xl font-black italic tracking-tighter text-white leading-none mb-2 shadow-cyan-500/50">50% OFF</h3>
-                    <p class="text-cyan-400 font-bold uppercase tracking-[0.3em] text-[10px]">ALL MENU ITEMS • NEXT MONTH</p>
-                </div>
+        <p id="loc-task" style="font-weight: bold; color: #fff;">...</p>
+        
+        <div style="margin-top: auto;">
+            <input type="text" id="user-input" placeholder="ENTER ANSWER" autocomplete="off">
+            <p id="error-msg" style="color: var(--error-color); height: 1rem; text-align: center; font-size: 0.8rem; margin-bottom: 5px;"></p>
+            <button class="primary-btn" onclick="checkAnswer()">VERIFY FRAGMENT</button>
+        </div>
+    </section>
 
-                <div class="bg-slate-950/60 border border-white/5 backdrop-blur-md rounded-3xl p-5 mb-8 text-center">
-                    <p class="text-slate-500 text-[9px] uppercase font-bold mb-1 tracking-widest">Exclusive Partner</p>
-                    <p class="text-white font-black text-xl italic tracking-tight">San Remo Ice Cafe</p>
-                    <p class="text-cyan-400/60 text-[8px] uppercase tracking-[0.4em] mt-1">Lemgo • Pilot v2.0</p>
-                </div>
+    <section id="screen-success" class="screen hidden">
+        <h2 style="color: var(--accent-color); border-color: var(--accent-color);">MISSION COMPLETE</h2>
+        
+        <p style="text-align: center; margin-top: 10px;">SAN REMO SECURITY: <strong>BYPASSED</strong></p>
+        
+        <div class="voucher-code">
+            1 MONTH SUB<br>
+            50% OFF HOT DRINKS
+        </div>
+        
+        <p style="text-align: center; font-size: 0.9rem;">
+            Show this screen to the staff at <strong>San Remo Ice Cafe</strong> to activate your 1-month exclusive subscription.
+        </p>
 
-                <!-- Footer / QR -->
-                <div class="flex items-center justify-between border-t border-white/10 pt-8">
-                    <div class="text-left">
-                        <p class="text-[9px] text-slate-500 uppercase font-bold mb-1">Redemption Code</p>
-                        <p class="text-cyan-400 font-mono text-sm tracking-wider">LC-SR-2027-PILOT</p>
-                    </div>
-                    <div class="w-16 h-16 bg-white p-1 rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=SR-PILOT-50-OFF-CLAIMED" alt="QR Verify">
-                    </div>
-                </div>
-
-                <!-- Background Graphic -->
-                <i class="fa-solid fa-robot absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[200px] text-white/5 pointer-events-none skew-x-12"></i>
-            </div>
+        <div style="border-top: 1px solid #333; margin-top: 20px; padding-top: 15px;">
+            <h3>Join the Elite</h3>
+            <p style="font-size: 0.8rem;">To verify your completion and secure your prize, click below:</p>
             
-            <div class="flex flex-col gap-4">
-                <button id="share-btn" onclick="shareQuest()" class="w-full bg-slate-900 border border-cyan-400/50 text-cyan-400 font-black py-4 rounded-2xl flex items-center justify-center gap-3 active:scale-95 transition-all">
-                    <i class="fa-solid fa-share-nodes"></i>
-                    SHARE QUEST ON INSTAGRAM
+            <a href="https://instagram.com/locali_studentlife" target="_blank" style="text-decoration: none;">
+                <button class="primary-btn" style="font-size: 0.9rem; padding: 12px; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">
+                    CLAIM PRIZE (DM US)
                 </button>
-                <button onclick="resetGame()" class="w-full text-slate-600 font-bold text-[10px] uppercase tracking-[0.4em] py-2">Restart Mission</button>
+            </a>
+
+            <div class="social-links" style="border: none; margin-top: 15px;">
+                <a href="https://instagram.com/locali_studentlife" target="_blank" class="social-btn">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:locali.thenewsocial@gmail.com" class="social-btn">
+                    <i class="fas fa-envelope"></i>
+                </a>
             </div>
-            
-            <p class="mt-8 text-slate-500 text-[9px] uppercase text-center leading-loose tracking-widest px-4">
-                Show this digital voucher to staff at San Remo.<br>Valid once per explorer. 
-            </p>
         </div>
+    </section>
 
-    </main>
+    <div class="reset-link" onclick="resetGame()">[ RESET SYSTEM / RESTART ]</div>
+</div>
 
-    <script>
-        // --- QUEST CONFIG ---
-        // These are the codes you will place on the physical markers in Lemgo
-        const CODES = {
-            1: "1358",      // CODE 1: Year on the Town Hall plaque
-            2: "CYBERPATH", // CODE 2: Keyword on the alley sticker
-            3: "SANREMO50"  // CODE 3: Final code from the San Remo counter
-        };
-
-        let currentStage = parseInt(localStorage.getItem('locali_stage')) || 1;
-
-        function init() {
-            if (localStorage.getItem('locali_completed')) {
-                showResult();
-                return;
-            }
-            showStage(currentStage);
+<script>
+    /* --- CONFIGURATION --- */
+    const STAGES = [
+        {
+            title: "Phoenix Contact Arena",
+            fact: "Home of TBV Lemgo. This arena holds over 5,000 screaming fans. It is the heartbeat of Lemgo's sports culture.",
+            task: "Go to coordinates 52.016434, 8.907245 (Zebra Crossing). Count the number of WHITE STRIPES crossing the road.",
+            answer: "7"
+        },
+        {
+            title: "Kanzelbrunnen",
+            fact: "A piece of Renaissance history. This 'pulpit well' has stood here for centuries, watching the city change from timber to neon.",
+            task: "Navigate to 52.028006, 8.906360. Count the number of HUMAN SCULPTURES on the monument.",
+            answer: "3"
+        },
+        {
+            title: "San Remo Ice Cafe",
+            fact: "A local legend. For decades, this spot has served the best gelato in town. The perfect place to cool down your systems.",
+            task: "Enter the cafe. Find the LOCALI flyer at the register and enter the SECRET CODE.",
+            answer: "LOCALI24"
         }
+    ];
 
-        function showStage(stage) {
-            document.querySelectorAll('#game-container > div').forEach(div => div.classList.add('hidden'));
-            document.getElementById(`stage-${stage}`).classList.remove('hidden');
+    /* --- STATE MANAGEMENT --- */
+    let currentState = parseInt(localStorage.getItem('locali_v4_state')) || 0;
+
+    function init() {
+        renderState();
+    }
+
+    function startGame() {
+        currentState = 1;
+        saveState();
+        renderState();
+    }
+
+    function renderState() {
+        document.getElementById('screen-intro').classList.add('hidden');
+        document.getElementById('screen-game').classList.add('hidden');
+        document.getElementById('screen-success').classList.add('hidden');
+
+        if (currentState === 0) {
+            document.getElementById('screen-intro').classList.remove('hidden');
+            document.getElementById('status-text').innerText = "AWAITING INPUT";
+        } else if (currentState > 0 && currentState <= STAGES.length) {
+            document.getElementById('screen-game').classList.remove('hidden');
+            const stageIndex = currentState - 1;
+            const stageData = STAGES[stageIndex];
+
+            document.getElementById('loc-title').innerText = `// LOC_0${currentState}: ${stageData.title}`;
+            document.getElementById('loc-fact').innerText = stageData.fact;
+            document.getElementById('loc-task').innerText = stageData.task;
             
-            const dots = document.getElementById('stage-dots').children;
-            for(let i=0; i<dots.length; i++) {
-                if (i < stage) {
-                    dots[i].classList.replace('bg-slate-800', 'bg-cyan-400');
-                    dots[i].classList.add('shadow-[0_0_8px_#22d3ee]');
-                } else {
-                    dots[i].classList.replace('bg-cyan-400', 'bg-slate-800');
-                    dots[i].classList.remove('shadow-[0_0_8px_#22d3ee]');
-                }
-            }
-            document.getElementById('level-indicator').innerText = `Stage ${stage} / 3`;
-        }
-
-        function checkStage(stage) {
-            const inputField = document.getElementById(`input-${stage}`);
-            const inputVal = inputField.value.trim().toUpperCase();
-            const btn = event.target;
+            document.getElementById('status-text').innerText = `TRACKING... [${currentState}/${STAGES.length}]`;
             
-            if (inputVal === CODES[stage]) {
-                if (stage < 3) {
-                    currentStage = stage + 1;
-                    localStorage.setItem('locali_stage', currentStage);
-                    showStage(currentStage);
-                } else {
-                    localStorage.setItem('locali_completed', 'true');
-                    showResult();
-                }
-            } else {
-                btn.classList.replace('bg-cyan-500', 'bg-red-500');
-                btn.classList.replace('bg-purple-600', 'bg-red-500');
-                btn.classList.replace('bg-emerald-500', 'bg-red-500');
-                const originalText = btn.innerText;
-                btn.innerText = "INVALID FRAGMENT";
-                
-                setTimeout(() => {
-                    btn.classList.remove('bg-red-500');
-                    if (stage === 1) btn.classList.add('bg-cyan-500');
-                    if (stage === 2) btn.classList.add('bg-purple-600');
-                    if (stage === 3) btn.classList.add('bg-emerald-500');
-                    btn.innerText = originalText;
-                }, 1200);
-            }
+            document.getElementById('user-input').value = "";
+            document.getElementById('error-msg').innerText = "";
+            
+            updateTracker(stageIndex);
+        } else {
+            document.getElementById('screen-success').classList.remove('hidden');
+            document.getElementById('status-text').innerText = "MISSION ACCOMPLISHED";
         }
+    }
 
-        function showResult() {
-            document.getElementById('game-container').classList.add('hidden');
-            document.getElementById('result-view').classList.remove('hidden');
-            document.getElementById('stage-dots').parentElement.classList.add('hidden');
+    function checkAnswer() {
+        const input = document.getElementById('user-input');
+        const userVal = input.value.trim().toUpperCase();
+        const stageIndex = currentState - 1;
+        const correctVal = STAGES[stageIndex].answer.toUpperCase();
+
+        if (userVal === correctVal) {
+            currentState++;
+            saveState();
+            renderState();
+        } else {
+            input.classList.add('shake');
+            document.getElementById('error-msg').innerText = "ERROR: INCORRECT FRAGMENT";
+            setTimeout(() => input.classList.remove('shake'), 500);
         }
+    }
 
-        function shareQuest() {
-            const shareData = {
-                title: 'LOCALI | The Lemgo Glitch',
-                text: 'I completed the hunt and unlocked a 50% discount at San Remo Lemgo! Can you find the codes?',
-                url: window.location.href
-            };
-
-            if (navigator.share) {
-                navigator.share(shareData);
-            } else {
-                // Fallback: Copy to clipboard
-                const dummy = document.createElement('input');
-                document.body.appendChild(dummy);
-                dummy.value = window.location.href;
-                dummy.select();
-                document.execCommand('copy');
-                document.body.removeChild(dummy);
-                
-                const btn = document.getElementById('share-btn');
-                const oldText = btn.innerHTML;
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> LINK COPIED!';
-                setTimeout(() => btn.innerHTML = oldText, 2000);
-            }
+    function updateTracker(activeIndex) {
+        for(let i=0; i<3; i++) {
+            const el = document.getElementById(`frag-${i}`);
+            el.className = 'fragment';
+            if(i < activeIndex) el.classList.add('active');
+            if(i === activeIndex) el.classList.add('current');
         }
+    }
 
-        function resetGame() {
-            localStorage.clear();
-            window.location.reload();
+    function saveState() {
+        localStorage.setItem('locali_v4_state', currentState);
+    }
+
+    function resetGame() {
+        if(confirm("REBOOT SYSTEM? This will wipe your progress.")) {
+            localStorage.removeItem('locali_v4_state');
+            location.reload();
         }
+    }
 
-        init();
-    </script>
+    init();
+</script>
 </body>
 </html>
